@@ -114,6 +114,8 @@ public class AeroCheck {
                         }
                         break;
                     case 3:
+                        //EDIT HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+                        handleSpecialNeeds(scanner);
                         System.out.println("Special Needs Assistance not implemented yet.");
                         break;
                     case 4:
@@ -130,7 +132,11 @@ public class AeroCheck {
             }
         }
     }
-    
+
+    //PASSENGER CHECK-IN [CASE 1]
+        //here
+
+    //GROUP LEADER CHECK-IN HERE [CASE 2]
     private static void gatherGrpLeadInfo(Scanner scanner){
         boolean validInt, confirm = false; // Confirm info or edit info
         int answer;
@@ -304,8 +310,9 @@ public class AeroCheck {
                 }
             }
         }
-    }
+    } //GROUP LEADER CHECK-IN ENDS
     
+    //GROUP PASSPORT [UNDER CASE 2]
     private static Group gatherPassportInfo(Scanner scanner){
         boolean validInt, confirm; // Confirm info or edit info
         int answer;
@@ -315,29 +322,36 @@ public class AeroCheck {
             System.out.println("\n== Passport Information ==");
             System.out.print("Passport number: ");
             passportNo = scanner.nextLine();
+            while (!passportValidator.validatePassportNumber(passportNo)) {
+                System.out.print("Passport number: ");
+                passportNo = scanner.nextLine();
+            }
+            
             System.out.print("Country: ");
             country = scanner.nextLine();
+            System.out.print("Passport expiry date (dd/mm/yyyy): ");
+            passportExpiry = scanner.nextLine();
             
             // Validate passport expiry
-            boolean valid = false;
-            while (!valid){
-                System.out.print("Passport expiry date (dd/mm/yyyy): ");
-                passportExpiry = scanner.nextLine();
+            // boolean valid = false;
+            // while (!valid){
+            //     System.out.print("Passport expiry date (dd/mm/yyyy): ");
+            //     passportExpiry = scanner.nextLine();
                 
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                Date expiryDate;
-                try {
-                    expiryDate = dateFormat.parse(passportExpiry);
-                    Date currentDate = new Date(); // Get current date
-                    if (expiryDate.before(currentDate)) {
-                        System.out.println("Passport has expired!");
-                    } else {
-                        valid = true;
-                    }
-                } catch (ParseException e) {
-                    System.out.println("Invalid date. Follow the format dd/mm/yyyy.");
-                }
-            }
+            //     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            //     Date expiryDate;
+            //     try {
+            //         expiryDate = dateFormat.parse(passportExpiry);
+            //         Date currentDate = new Date(); // Get current date
+            //         if (expiryDate.before(currentDate)) {
+            //             System.out.println("Passport has expired!");
+            //         } else {
+            //             valid = true;
+            //         }
+            //     } catch (ParseException e) {
+            //         System.out.println("Invalid date. Follow the format dd/mm/yyyy.");
+            //     }
+            // }
             
             System.out.print("Passport issuing country: ");
             issuingCountry = scanner.nextLine();
@@ -347,6 +361,13 @@ public class AeroCheck {
             System.out.println("Country: " + country);
             System.out.println("Passport expiry date (dd/mm/yyyy): " + passportExpiry);
             System.out.println("Passport issuing country: " + issuingCountry);
+
+            //new validator
+        //     PassportValidator passportValidator = new PassportValidator();
+        // if (!passportValidator.validatePassport(passportNo, country, passportExpiry)) {
+        //     System.out.println("Invalid passport information. Please try again.");
+        //     continue;
+        }
 
             validInt = false; // reset value
             while(!validInt){
@@ -387,7 +408,8 @@ public class AeroCheck {
         }
         return new Group(bookingID, grpLeadBookingID, FName, LName, gender, grpLeadEmail, grpLeadContact, nationality, dob, passportNo, country, passportExpiry, issuingCountry);
     }
-    
+
+    //GROUP MEMBER INFO [UNDER CASE 2]
     private static void gatherGrpMemberInfo(Scanner scanner, ArrayList<Group> members){
         // Fill in info for group members 
         boolean validInt = false; // reset value to prevent looping
@@ -591,5 +613,129 @@ public class AeroCheck {
                 scanner.nextLine(); // Consume invalid input
             }
         }
+    }
+
+    //SPECIAL NEEDS CHECK-IN
+    private static void handleSpecialNeeds(Scanner scanner){
+        boolean sValidInt, sConfirm; // Confirm info or edit info
+        int sAnswer;
+
+        System.out.println("== Special Needs Check-in ==");
+
+        System.out.print("Enter Booking ID: ");
+        int bookingID = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter First Name: ");
+        String fName = scanner.nextLine();
+
+        System.out.print("Enter Last Name: ");
+        String lName = scanner.nextLine();
+
+        System.out.print("Enter Gender (1 for Female, 2 for Male): ");
+        int gender = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter Email: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Enter Contact: ");
+        String contact = scanner.nextLine();
+
+        System.out.print("Enter Nationality: ");
+        String nationality = scanner.nextLine();
+
+        System.out.print("Date of Birth (dd/mm/yyyy): ");
+        String dob = scanner.nextLine();
+
+        //passport part
+        sConfirm = false;
+        while(!sConfirm){
+            System.out.println("\n== Passport Information ==");
+            System.out.print("Passport number: ");
+            passportNo = scanner.nextLine();
+            System.out.print("Country: ");
+            country = scanner.nextLine();
+            
+            // Validate passport expiry
+            boolean valid = false;
+            while (!valid){
+                System.out.print("Passport expiry date (dd/mm/yyyy): ");
+                passportExpiry = scanner.nextLine();
+                
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date expiryDate;
+                try {
+                    expiryDate = dateFormat.parse(passportExpiry);
+                    Date currentDate = new Date(); // Get current date
+                    if (expiryDate.before(currentDate)) {
+                        System.out.println("Passport has expired!");
+                    } else {
+                        valid = true;
+                    }
+                } catch (ParseException e) {
+                    System.out.println("Invalid date. Follow the format dd/mm/yyyy.");
+                }
+            }
+
+
+            System.out.print("Passport issuing country: ");
+            issuingCountry = scanner.nextLine();
+
+            System.out.println("\n== Passport Information ==");
+            System.out.println("Passport number: " + passportNo);
+            System.out.println("Country: " + country);
+            System.out.println("Passport expiry date (dd/mm/yyyy): " + passportExpiry);
+            System.out.println("Passport issuing country: " + issuingCountry);
+
+            sValidInt = false; // reset value
+            while(!sValidInt){
+                System.out.println("\nIs the above infomation correct or do you want to make changes?");
+                System.out.println("1. Confirm");
+                System.out.println("2. Edit");
+                System.out.print("Pick: ");
+                try{
+                    if (scanner.hasNextInt()){
+                        sAnswer = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline character left by nextInt()
+
+                        switch(sAnswer){
+                            case 1:
+                                sConfirm = true;
+                                sValidInt = true;
+                                break;
+                            case 2:
+                                sConfirm = false;
+                                sValidInt = true;
+                                break;
+                            default:
+                                System.out.println("Invalid input, please enter 1 or 2.");
+                                sValidInt = false;
+                                break;
+                        }
+                    }else{
+                        System.out.println("Invalid input, please enter 1 or 2.");
+                        sValidInt = false;
+                        scanner.nextLine(); // Consume invalid input
+                    }
+                }catch(InputMismatchException ex){
+                    System.out.println("Invalid input, please enter 1 or 2.");
+                    sValidInt = false;
+                    scanner.nextLine(); // Consume invalid input
+                }
+
+            
+            }
+            
+            System.out.print("Enter Assistance Type: ");
+            String assistanceType = scanner.nextLine();
+
+            SpecialNeeds specialNeedsPassenger = new SpecialNeeds(
+                bookingID, fName, lName, gender, email, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType
+            );
+
+            specialNeedsPassenger.requestAssistance();
+            System.out.println(specialNeedsPassenger);
+        }    
     }
 }
