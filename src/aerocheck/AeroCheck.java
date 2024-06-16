@@ -1,13 +1,8 @@
 package aerocheck;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
-
 
 public class AeroCheck {
     static int bookingID, grpLeadBookingID, gender;
@@ -118,7 +113,7 @@ public class AeroCheck {
                     case 3:
                         //EDIT HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
                         gatherSNeedsInfo(scanner);
-                        System.out.println("Special Needs Assistance not implemented yet.");
+                        SpecialgatherPassportInfo(scanner);
                         break;
                     case 4:
                         System.exit(0);
@@ -357,8 +352,6 @@ public class AeroCheck {
             System.out.println("Passport expiry date (dd/mm/yyyy): " + passportExpiry);
             System.out.println("Passport issuing country: " + issuingCountry);
 
-        }
-
             validInt = false; // reset value
             while(!validInt){
                 System.out.println("\nIs the above infomation correct or do you want to make changes?");
@@ -395,6 +388,7 @@ public class AeroCheck {
                     scanner.nextLine(); // Consume invalid input
                 }
             }
+        }
             return new Group(bookingID, grpLeadBookingID, FName, LName, gender, grpLeadEmail, grpLeadContact, nationality, dob, passportNo, country, passportExpiry, issuingCountry);
     }
         
@@ -449,7 +443,7 @@ public class AeroCheck {
                             LName = scanner.nextLine();
                             System.out.print("Email: " + grpLeadEmail);
                             System.out.print("Telephone number: " + grpLeadContact);
-
+                            
                             // Display entered information
                             System.out.println("\n== Passenger Information ==");
                             System.out.println("Booking ID: " + bookingID);
@@ -608,7 +602,7 @@ public class AeroCheck {
     //SPECIAL NEEDS CHECK-IN
     private static void gatherSNeedsInfo(Scanner scanner){
     boolean validInt, confirm = false; // Confirm info or edit info
-    int answer;
+    int answer, bookingId = 0;
     // Display questionaires for grp representative
     while(!confirm){
         System.out.println("\n== Special Needs Check-in ==");
@@ -617,7 +611,7 @@ public class AeroCheck {
             System.out.print("Booking ID: ");
             try{
                 if (scanner.hasNextInt()){
-                    int bookingId = scanner.nextInt();
+                    bookingId = scanner.nextInt();
                     validInt = true;
                     scanner.nextLine(); // Consume the newline character left by nextInt()
                 }else{
@@ -887,6 +881,6 @@ public class AeroCheck {
             specialNeedsPassenger.requestAssistance();
             System.out.println(specialNeedsPassenger);
         }  
-        return new SpecialNeeds(bookingId, fName, lName, gender, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType);
+        return new SpecialNeeds(bookingID, fName, lName, gender, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType);
     }
 }
