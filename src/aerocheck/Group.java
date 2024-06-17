@@ -8,9 +8,9 @@ public class Group extends Passenger{
         this.grpLeadID = grpLeadID;
     }
     
-    public Group(){
+    // public Group(){
         
-    }
+    // }
     
     public int getGrpLeadID() {
         return grpLeadID;
