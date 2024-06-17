@@ -1,17 +1,12 @@
 package aerocheck;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
-
 public class AeroCheck {
     static int bookingID, grpLeadBookingID, gender;
-    static String FName, LName, grpLeadEmail, grpLeadContact, nationality, dob, passportNo, country, passportExpiry, issuingCountry;
+    static String FName, LName, grpLeadEmail, grpLeadContact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType, email, fName, lName, contact;
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean valid = false;
@@ -118,7 +113,9 @@ public class AeroCheck {
                     case 3:
                         //EDIT HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
                         gatherSNeedsInfo(scanner);
-                        System.out.println("Special Needs Assistance not implemented yet.");
+
+                        SpecialNeeds specialNeeds = SpecialgatherPassportInfo(scanner);
+                        System.out.println(specialNeeds);
                         break;
                     case 4:
                         System.exit(0);
@@ -357,8 +354,6 @@ public class AeroCheck {
             System.out.println("Passport expiry date (dd/mm/yyyy): " + passportExpiry);
             System.out.println("Passport issuing country: " + issuingCountry);
 
-        }
-
             validInt = false; // reset value
             while(!validInt){
                 System.out.println("\nIs the above infomation correct or do you want to make changes?");
@@ -395,6 +390,7 @@ public class AeroCheck {
                     scanner.nextLine(); // Consume invalid input
                 }
             }
+        }
             return new Group(bookingID, grpLeadBookingID, FName, LName, gender, grpLeadEmail, grpLeadContact, nationality, dob, passportNo, country, passportExpiry, issuingCountry);
     }
         
@@ -449,7 +445,7 @@ public class AeroCheck {
                             LName = scanner.nextLine();
                             System.out.print("Email: " + grpLeadEmail);
                             System.out.print("Telephone number: " + grpLeadContact);
-
+                            
                             // Display entered information
                             System.out.println("\n== Passenger Information ==");
                             System.out.println("Booking ID: " + bookingID);
@@ -608,7 +604,7 @@ public class AeroCheck {
     //SPECIAL NEEDS CHECK-IN
     private static void gatherSNeedsInfo(Scanner scanner){
     boolean validInt, confirm = false; // Confirm info or edit info
-    int answer;
+    int answer, bookingId = 0;
     // Display questionaires for grp representative
     while(!confirm){
         System.out.println("\n== Special Needs Check-in ==");
@@ -617,7 +613,7 @@ public class AeroCheck {
             System.out.print("Booking ID: ");
             try{
                 if (scanner.hasNextInt()){
-                    int bookingId = scanner.nextInt();
+                    bookingId = scanner.nextInt();
                     validInt = true;
                     scanner.nextLine(); // Consume the newline character left by nextInt()
                 }else{
@@ -785,23 +781,23 @@ public class AeroCheck {
         int sAnswer;
         PassportValidator sPassportValidator = new PassportValidator();
         sConfirm = false;
-        String fName, lName, email, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType;
-        int bookingID =0, grpLeadBookingID, gender;
+        // String fName, lName, email, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType;
+        // int bookingID =0, gender;
 
-        // Initialize variables
-        fName = "";
-        lName = "";
-        email = "";
-        contact = "";
-        nationality = "";
-        dob = "";
-        passportNo = "";
-        country = "";
-        passportExpiry = "";
-        issuingCountry = "";
-        assistanceType = "";
-        bookingID = 0;
-        gender = 0;
+        // // Initialize variables
+        // fName = "";
+        // lName = "";
+        // email = "";
+        // contact = "";
+        // nationality = "";
+        // dob = "";
+        // passportNo = "";
+        // country = "";
+        // passportExpiry = "";
+        // issuingCountry = "";
+        // assistanceType = "";
+        // bookingID = 0;
+        // gender = 0;
 
         while(!sConfirm){
             System.out.println("\n== Passport Information ==");
@@ -881,12 +877,12 @@ public class AeroCheck {
             System.out.print("Enter Assistance Type: ");
             assistanceType = scanner.nextLine();
 
-            SpecialNeeds specialNeedsPassenger = new SpecialNeeds(
-            bookingID, fName, lName, gender, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType);
+            // SpecialNeeds specialNeedsPassenger = new SpecialNeeds(
+            // bookingID, fName, lName, gender, email, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType);
 
-            specialNeedsPassenger.requestAssistance();
-            System.out.println(specialNeedsPassenger);
+            // specialNeedsPassenger.requestAssistance();
+            // System.out.println(specialNeedsPassenger);
         }  
-        return new SpecialNeeds(bookingId, fName, lName, gender, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType);
+        return new SpecialNeeds(bookingID, fName, lName, gender, email, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType);
     }
 }
