@@ -3,18 +3,13 @@ package aerocheck;
 public class SpecialNeeds extends Passenger{
     private String assistanceType;
     
-    public SpecialNeeds(int bookingId, String fName, String lName, int gender, String contact, String nationality, String dob, String passportNo, String country, String passportExpiry, String issuingCountry, String assistanceType) {
-        super(bookingId, fName, lName, gender, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType);
+    public SpecialNeeds(int bookingId, String fName, String lName, int gender, String email, String contact, String nationality, String dob, String passportNo, String country, String passportExpiry, String issuingCountry, String assistanceType) {
+        super(bookingId, fName, lName, gender, email, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType);
         this.assistanceType = assistanceType;
     }
 
     public String getAssistanceType(){
         return assistanceType;
-    }
-
-    public void requestAssistance() {
-        // Logic to request special assistance
-        System.out.println(getFName() + " " + getLName() + " has requested assistance: " + assistanceType);
     }
 
     public void updateAssistanceDetails(String assistanceType) {
@@ -23,6 +18,28 @@ public class SpecialNeeds extends Passenger{
 
     @Override
     public String toString(){
-        return super.toString() + "\nAssistance Type: " + assistanceType;
+        String gender;
+        if (getGender() == 1)
+            gender = "Female";
+        else
+            gender = "Male";
+        
+        String str = "\n== Group Check-In Information ==" 
+                + "\nBooking ID: " + getBookingID()  
+                + "\nFirst Name: " + getFName() 
+                + "\nLast Name: " + getLName()
+                + "\nGender: " + gender
+                + "\nEmail: " + getEmail()
+                + "\nContact: " + getContact()
+                + "\nNationality: " + getNationality()
+                + "\nDate of Birth: " + getDob() + "\n"
+                + "\n== Passport Information =="
+                + "\nPassport Number: " + getPassportNo()
+                + "\nCountry: " + getCountry()
+                + "\nPassport Expiry: " + getPassportExpiry()
+                + "\nPassport issuing country: " + getIssuingCountry() + "\n"
+                + "\n== Special Needs Assistance =="
+                + "\nAssistance requested: " + getAssistanceType();
+        return str;
     }
 }
