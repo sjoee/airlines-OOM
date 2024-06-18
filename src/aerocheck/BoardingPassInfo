@@ -1,0 +1,22 @@
+ package pcheckin;
+
+/**
+ *
+ * @author ASUS
+ */
+
+
+class BoardingPass {
+    private String passengerID;
+    private String seatNumber;
+
+    public BoardingPass(String passengerID, String seatNumber) {
+        this.passengerID = passengerID;
+        this.seatNumber = seatNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "PassengerID: " + passengerID + ", Seat: " + seatNumber;
+    }
+}
