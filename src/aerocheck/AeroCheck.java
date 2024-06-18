@@ -1,5 +1,7 @@
 package aerocheck;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -137,7 +139,7 @@ public class AeroCheck {
 
     //GROUP LEADER CHECK-IN HERE [CASE 2]
     private static void gatherGrpLeadInfo(Scanner scanner){
-        boolean validInt, confirm = false; // Confirm info or edit info
+        boolean validInt, confirm = false, valid = false; // Confirm info or edit info
         int answer;
         // Display questionaires for grp representative
         while(!confirm){
@@ -168,6 +170,7 @@ public class AeroCheck {
             LName = scanner.nextLine();
             System.out.print("Email: ");
             grpLeadEmail = scanner.nextLine();
+            
             System.out.print("Telephone number: ");
             grpLeadContact = scanner.nextLine();
 
@@ -259,8 +262,21 @@ public class AeroCheck {
                     scanner.nextLine(); // Consume invalid input
                 }
             }
-            System.out.println("Date of Birth (dd/mm/yyyy): ");
-            dob = scanner.nextLine();
+            
+            // Validate date format
+            while(!valid){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            dateFormat.setLenient(false);
+            try{
+                System.out.println("Date of Birth (dd/mm/yyyy): ");
+                dob = scanner.nextLine();
+                dateFormat.parse(dob);
+                valid = true;
+            }
+            catch(ParseException e){
+                System.out.println("Invalid date format! Follow the format (dd/mm/yyyy).");
+            }
+        }
 
             System.out.println("\n== Personal Details ==");
             System.out.println("Nationality: " + nationality);
@@ -398,7 +414,7 @@ public class AeroCheck {
     //GROUP MEMBER INFO [UNDER CASE 2]
     private static void gatherGrpMemberInfo(Scanner scanner, ArrayList<Group> members){
         // Fill in info for group members 
-        boolean validInt = false; // reset value to prevent looping
+        boolean validInt = false, valid = false; // reset value to prevent looping
         while(!validInt){
             System.out.print("\nAmount of travellers checking in (excluding group representative): ");
             try{
@@ -443,8 +459,8 @@ public class AeroCheck {
                             FName = scanner.nextLine();
                             System.out.print("Last Name: ");
                             LName = scanner.nextLine();
-                            System.out.print("Email: " + grpLeadEmail);
-                            System.out.print("Telephone number: " + grpLeadContact);
+                            System.out.println("Email: " + grpLeadEmail);
+                            System.out.println("Telephone number: " + grpLeadContact);
                             
                             // Display entered information
                             System.out.println("\n== Passenger Information ==");
@@ -535,8 +551,21 @@ public class AeroCheck {
                                     scanner.nextLine(); // Consume invalid input
                                 }
                             }
-                            System.out.println("Date of Birth (dd/mm/yyyy): ");
-                            dob = scanner.nextLine();
+                            
+                            // Validate date format
+                            while(!valid){
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                                dateFormat.setLenient(false);
+                                try{
+                                    System.out.println("Date of Birth (dd/mm/yyyy): ");
+                                    dob = scanner.nextLine();
+                                    dateFormat.parse(dob);
+                                    valid = true;
+                                }
+                                catch(ParseException e){
+                                    System.out.println("Invalid date format! Follow the format (dd/mm/yyyy).");
+                                }
+                            }
 
                             System.out.println("\n== Personal Details ==");
                             System.out.println("Nationality: " + nationality);
@@ -603,7 +632,7 @@ public class AeroCheck {
 
     //SPECIAL NEEDS CHECK-IN
     private static void gatherSNeedsInfo(Scanner scanner){
-    boolean validInt, confirm = false; // Confirm info or edit info
+    boolean validInt, confirm = false, valid = false; // Confirm info or edit info
     int answer;//, bookingId = 0;
     // Display questionaires for grp representative
     while(!confirm){
@@ -724,9 +753,22 @@ public class AeroCheck {
                 scanner.nextLine(); // Consume invalid input
             }
         }
-        System.out.println("Date of Birth (dd/mm/yyyy): ");
-        dob = scanner.nextLine();
-
+        
+        // Validate date format
+        while(!valid){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            dateFormat.setLenient(false);
+            try{
+                System.out.println("Date of Birth (dd/mm/yyyy): ");
+                dob = scanner.nextLine();
+                dateFormat.parse(dob);
+                valid = true;
+            }
+            catch(ParseException e){
+                System.out.println("Invalid date format! Follow the format (dd/mm/yyyy).");
+            }
+        }
+        
         System.out.println("\n== Personal Details ==");
         System.out.println("Nationality: " + nationality);
         System.out.print("Gender: ");
