@@ -3,8 +3,8 @@ package aerocheck;
 public class SpecialNeeds extends Passenger{
     private String assistanceType;
     
-    public SpecialNeeds(int bookingId, String fName, String lName, int gender, String email, String contact, String nationality, String dob, String passportNo, String country, String passportExpiry, String issuingCountry, String assistanceType) {
-        super(bookingId, fName, lName, gender, email, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType);
+    public SpecialNeeds(int BookingID, String FName, String LName, int gender, String email, String contact, String nationality, String dob, String passportNo, String country, String passportExpiry, String issuingCountry, String assistanceType) {
+        super(BookingID, FName, LName, gender, email, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry);
         this.assistanceType = assistanceType;
     }
 
@@ -24,7 +24,7 @@ public class SpecialNeeds extends Passenger{
         else
             gender = "Male";
         
-        String str = "\n== Group Check-In Information ==" 
+        String str = "\n== Special Needs Check-In Information ==" 
                 + "\nBooking ID: " + getBookingID()  
                 + "\nFirst Name: " + getFName() 
                 + "\nLast Name: " + getLName()

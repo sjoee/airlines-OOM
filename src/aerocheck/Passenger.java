@@ -19,9 +19,9 @@ public class Passenger {
         this.issuingCountry = issuingCountry;
     }
     
-    public Passenger(int bookingId2, String fName2, String lName2, int gender2, String email2, String contact2, String nationality2, String dob2, String passportNo2, String country2, String passportExpiry2, String issuingCountry2, String assistanceType){
+    /*public Passenger(int bookingId2, String fName2, String lName2, int gender2, String email2, String contact2, String nationality2, String dob2, String passportNo2, String country2, String passportExpiry2, String issuingCountry2, String assistanceType){
         
-    }
+    }*/
     
     public int getBookingID() {
         return BookingID;

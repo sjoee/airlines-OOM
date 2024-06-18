@@ -422,7 +422,7 @@ public class AeroCheck {
                                         validInt = true;
                                         scanner.nextLine(); // Consume the newline character left by nextInt()
                                         for(Group member:members){
-                                            if (bookingID == member.getBookingID() || bookingID == member.getGrpLeadID()){
+                                            if (bookingID == member.getBookingID() || bookingID == member.getGrpLeadID()){ // If bookingID is not unique
                                                 System.out.println("Booking ID is not unique! Enter again.");
                                                 validInt = false;
                                                 break;
@@ -604,7 +604,7 @@ public class AeroCheck {
     //SPECIAL NEEDS CHECK-IN
     private static void gatherSNeedsInfo(Scanner scanner){
     boolean validInt, confirm = false; // Confirm info or edit info
-    int answer, bookingId = 0;
+    int answer;//, bookingId = 0;
     // Display questionaires for grp representative
     while(!confirm){
         System.out.println("\n== Special Needs Check-in ==");
@@ -613,7 +613,7 @@ public class AeroCheck {
             System.out.print("Booking ID: ");
             try{
                 if (scanner.hasNextInt()){
-                    bookingId = scanner.nextInt();
+                    bookingID = scanner.nextInt();
                     validInt = true;
                     scanner.nextLine(); // Consume the newline character left by nextInt()
                 }else{
@@ -628,19 +628,19 @@ public class AeroCheck {
             }
         }
         System.out.print("First Name: ");
-        String fName = scanner.nextLine();
+        FName = scanner.nextLine();
         System.out.print("Last Name: ");
-        String lName = scanner.nextLine();
+        LName = scanner.nextLine();
         System.out.print("Email: ");
-        String email = scanner.nextLine();
+        email = scanner.nextLine();
         System.out.print("Telephone number: ");
-        String contact = scanner.nextLine();
+        contact = scanner.nextLine();
 
         // Display entered information
         System.out.println("\n== Special Needs Information ==");
-        System.out.println("Booking ID: " + bookingId);
-        System.out.println("First Name: " + fName);
-        System.out.println("Last Name: " + lName);
+        System.out.println("Booking ID: " + bookingID);
+        System.out.println("First Name: " + FName);
+        System.out.println("Last Name: " + LName);
         System.out.println("Email: " + email);
         System.out.println("Telephone Number: " + contact);
 
@@ -883,6 +883,6 @@ public class AeroCheck {
             // specialNeedsPassenger.requestAssistance();
             // System.out.println(specialNeedsPassenger);
         }  
-        return new SpecialNeeds(bookingID, fName, lName, gender, email, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType);
+        return new SpecialNeeds(bookingID, FName, LName, gender, email, contact, nationality, dob, passportNo, country, passportExpiry, issuingCountry, assistanceType);
     }
 }
