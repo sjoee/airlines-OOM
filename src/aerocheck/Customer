@@ -1,0 +1,72 @@
+package pcheckin;
+
+import java.time.LocalDate;
+
+class Customer {
+    
+    private String customerID;
+    private String name;
+    private String contactInfo;
+    private String email;
+    private String phoneNumber;
+    private String passportNumber;
+    private LocalDate passportExpiryDate;
+    private String country;
+
+    public Customer(String customerID, String name, String contactInfo, String email, String phoneNumber, String passportNumber, LocalDate passportExpiryDate, String country) {
+        this.customerID = customerID;
+        this.name = name;
+        this.contactInfo = contactInfo;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.passportNumber = passportNumber;
+        this.passportExpiryDate = passportExpiryDate;
+        this.country = country;
+    }
+
+    public String getCustomerID() {
+        return customerID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getContactInfo() {
+        return contactInfo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getPassportNumber() {
+        return passportNumber;
+    }
+
+    public LocalDate getPassportExpiryDate() {
+        return passportExpiryDate;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerID='" + customerID + '\'' +
+                ", name='" + name + '\'' +
+                ", contactInfo='" + contactInfo + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", passportNumber='" + passportNumber + '\'' +
+                ", passportExpiryDate=" + passportExpiryDate +
+                ", country='" + country + '\'' +
+                '}';
+    }
+}
