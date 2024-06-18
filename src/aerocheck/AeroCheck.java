@@ -139,6 +139,7 @@ public class AeroCheck {
 
     //GROUP LEADER CHECK-IN HERE [CASE 2]
     private static void gatherGrpLeadInfo(Scanner scanner){
+        UserInputHandler handle = new UserInputHandler();
         boolean validInt, confirm = false, valid = false; // Confirm info or edit info
         int answer;
         // Display questionaires for grp representative
@@ -164,15 +165,10 @@ public class AeroCheck {
                     scanner.nextLine(); // Consume invalid input
                 }
             }
-            System.out.print("First Name: ");
-            FName = scanner.nextLine();
-            System.out.print("Last Name: ");
-            LName = scanner.nextLine();
-            System.out.print("Email: ");
-            grpLeadEmail = scanner.nextLine();
-            
-            System.out.print("Telephone number: ");
-            grpLeadContact = scanner.nextLine();
+            FName = handle.getFName();
+            LName = handle.getLName();
+            grpLeadEmail = handle.getEmail();
+            grpLeadContact = handle.getContact();
 
             // Display entered information
             System.out.println("\n== Group Representative Information ==");
@@ -224,59 +220,9 @@ public class AeroCheck {
         confirm = false;
         while(!confirm){
             System.out.println("\n== Required Information ==");
-            System.out.print("Nationality: ");
-            nationality = scanner.nextLine();
-
-            validInt = false;
-            while(!validInt){
-                System.out.println("\n== Personal Details ==");
-                System.out.println("Gender: ");
-                System.out.println("1. Female");
-                System.out.println("2. Male");
-                System.out.print("Pick: ");
-                try{
-                    if (scanner.hasNextInt()){
-                        gender = scanner.nextInt();
-                        scanner.nextLine(); // Consume the newline character left by nextInt()
-
-                        switch (gender){
-                            case 1:
-                                validInt = true;
-                                break;
-                            case 2:
-                                validInt = true;
-                                break;
-                            default:
-                                System.out.println("Invalid input, please enter 1 or 2.");
-                                validInt = false;
-                                break;
-                        }
-                    }else{
-                        System.out.println("Invalid input, please enter 1 or 2.");
-                        validInt = false;
-                        scanner.nextLine(); // Consume invalid input
-                    }
-                }catch(InputMismatchException ex){
-                    System.out.println("Invalid input, please enter 1 or 2.");
-                    validInt = false;
-                    scanner.nextLine(); // Consume invalid input
-                }
-            }
-            
-            // Validate date format
-            while(!valid){
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            dateFormat.setLenient(false);
-            try{
-                System.out.println("Date of Birth (dd/mm/yyyy): ");
-                dob = scanner.nextLine();
-                dateFormat.parse(dob);
-                valid = true;
-            }
-            catch(ParseException e){
-                System.out.println("Invalid date format! Follow the format (dd/mm/yyyy).");
-            }
-        }
+            nationality = handle.getNationality();
+            gender = handle.getGender();
+            dob = handle.getDob();
 
             System.out.println("\n== Personal Details ==");
             System.out.println("Nationality: " + nationality);
@@ -413,8 +359,9 @@ public class AeroCheck {
 
     //GROUP MEMBER INFO [UNDER CASE 2]
     private static void gatherGrpMemberInfo(Scanner scanner, ArrayList<Group> members){
+        UserInputHandler handle = new UserInputHandler();
         // Fill in info for group members 
-        boolean validInt = false, valid = false; // reset value to prevent looping
+        boolean validInt = false; // reset value to prevent looping
         while(!validInt){
             System.out.print("\nAmount of travellers checking in (excluding group representative): ");
             try{
@@ -423,6 +370,11 @@ public class AeroCheck {
                     validInt = true;
                     scanner.nextLine(); // Consume the newline character left by nextInt()
 
+                    if (ticketQty == 0){
+                        System.out.println("Invalid input. Enter quantity more than or equals to 1.");
+                        validInt = false;
+                    }
+                    
                     // Display questionaires for passenger info
                     for (int i=0;i<ticketQty;i++){
                         boolean confirm = false;
@@ -431,7 +383,6 @@ public class AeroCheck {
                             validInt = false; // reset value
                             while(!validInt){ // validate integer value
                                 System.out.print("Booking ID: ");
-
                                 try{
                                     if (scanner.hasNextInt()){
                                         bookingID = scanner.nextInt();
@@ -455,10 +406,8 @@ public class AeroCheck {
                                     scanner.nextLine(); // Consume invalid input
                                 }
                             }
-                            System.out.print("First Name: ");
-                            FName = scanner.nextLine();
-                            System.out.print("Last Name: ");
-                            LName = scanner.nextLine();
+                            FName = handle.getFName();
+                            LName = handle.getLName();
                             System.out.println("Email: " + grpLeadEmail);
                             System.out.println("Telephone number: " + grpLeadContact);
                             
@@ -514,58 +463,9 @@ public class AeroCheck {
                         confirm = false;
                         while(!confirm){
                             System.out.println("\n== Required Information ==");
-                            System.out.print("Nationality: ");
-                            nationality = scanner.nextLine();
-
-                            validInt = false;
-                            while(!validInt){
-                                System.out.println("\n== Personal Details ==");
-                                System.out.println("Gender: ");
-                                System.out.println("1. Female");
-                                System.out.println("2. Male");
-                                System.out.print("Pick: ");
-                                try{
-                                    if (scanner.hasNextInt()){
-                                        gender = scanner.nextInt();
-                                        scanner.nextLine(); // Consume the newline character left by nextInt()
-                                        switch (gender){
-                                            case 1:
-                                                validInt = true;
-                                                break;
-                                            case 2:
-                                                validInt = true;
-                                                break;
-                                            default:
-                                                System.out.println("Invalid input, enter 1 or 2.");
-                                                validInt = false;
-                                                break;
-                                        }
-                                    }else{
-                                        System.out.println("Invalid input, please enter 1 or 2.");
-                                        validInt = false;
-                                        scanner.nextLine(); // Consume invalid input
-                                    }
-                                }catch(InputMismatchException ex){
-                                    System.out.println("Invalid input, please enter 1 or 2.");
-                                    validInt = false;
-                                    scanner.nextLine(); // Consume invalid input
-                                }
-                            }
-                            
-                            // Validate date format
-                            while(!valid){
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                                dateFormat.setLenient(false);
-                                try{
-                                    System.out.println("Date of Birth (dd/mm/yyyy): ");
-                                    dob = scanner.nextLine();
-                                    dateFormat.parse(dob);
-                                    valid = true;
-                                }
-                                catch(ParseException e){
-                                    System.out.println("Invalid date format! Follow the format (dd/mm/yyyy).");
-                                }
-                            }
+                            nationality = handle.getNationality();
+                            gender = handle.getGender();
+                            dob = handle.getDob();
 
                             System.out.println("\n== Personal Details ==");
                             System.out.println("Nationality: " + nationality);
@@ -615,7 +515,7 @@ public class AeroCheck {
                             }
                         }
                         // Gather passport info and store all data in arraylist
-                        gatherPassportInfo(scanner);
+                        members.add(gatherPassportInfo(scanner));
                     }
                 }else{
                     System.out.println("Invalid input, please enter an integer.");
@@ -632,191 +532,120 @@ public class AeroCheck {
 
     //SPECIAL NEEDS CHECK-IN
     private static void gatherSNeedsInfo(Scanner scanner){
-    boolean validInt, confirm = false, valid = false; // Confirm info or edit info
-    int answer;//, bookingId = 0;
-    // Display questionaires for grp representative
-    while(!confirm){
-        System.out.println("\n== Special Needs Check-in ==");
-        validInt = false; // reset value
-        while(!validInt){ // validate integer value
-            System.out.print("Booking ID: ");
-            try{
-                if (scanner.hasNextInt()){
-                    bookingID = scanner.nextInt();
-                    validInt = true;
-                    scanner.nextLine(); // Consume the newline character left by nextInt()
-                }else{
-                    System.out.println("Invalid input, please enter numericals.");
-                    validInt = false;
-                    scanner.nextLine(); // Consume invalid input
-                }
-            }catch(InputMismatchException ex){
-                System.out.println("Invalid input, please enter numericals.");
-                validInt = false;
-                scanner.nextLine(); // Consume invalid input
-            }
-        }
-        System.out.print("First Name: ");
-        FName = scanner.nextLine();
-        System.out.print("Last Name: ");
-        LName = scanner.nextLine();
-        System.out.print("Email: ");
-        email = scanner.nextLine();
-        System.out.print("Telephone number: ");
-        contact = scanner.nextLine();
+        UserInputHandler handle = new UserInputHandler();
+        boolean validInt, confirm = false, valid = false; // Confirm info or edit info
+        int answer;//, bookingId = 0;
+        // Display questionaires for grp representative
+        while(!confirm){
+            System.out.println("\n== Special Needs Check-in ==");
+            bookingID = handle.getBookingID();
+            FName = handle.getFName();
+            LName = handle.getLName();
+            email = handle.getEmail();
+            contact = handle.getContact();
 
-        // Display entered information
-        System.out.println("\n== Special Needs Information ==");
-        System.out.println("Booking ID: " + bookingID);
-        System.out.println("First Name: " + FName);
-        System.out.println("Last Name: " + LName);
-        System.out.println("Email: " + email);
-        System.out.println("Telephone Number: " + contact);
+            // Display entered information
+            System.out.println("\n== Special Needs Information ==");
+            System.out.println("Booking ID: " + bookingID);
+            System.out.println("First Name: " + FName);
+            System.out.println("Last Name: " + LName);
+            System.out.println("Email: " + email);
+            System.out.println("Telephone Number: " + contact);
 
-        validInt = false; // reset value
-        while(!validInt){
-            System.out.println("\nIs the above infomation correct or do you want to make changes?");
-            System.out.println("1. Confirm");
-            System.out.println("2. Edit");
-            System.out.print("Pick: ");
-            try{
-                if (scanner.hasNextInt()){
-                    answer = scanner.nextInt();
-                    scanner.nextLine(); // Consume the newline character left by nextInt()
+            validInt = false; // reset value
+            while(!validInt){
+                System.out.println("\nIs the above infomation correct or do you want to make changes?");
+                System.out.println("1. Confirm");
+                System.out.println("2. Edit");
+                System.out.print("Pick: ");
+                try{
+                    if (scanner.hasNextInt()){
+                        answer = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline character left by nextInt()
 
-                    switch(answer){
-                        case 1:
-                            confirm = true;
-                            validInt = true;
-                            break;
-                        case 2:
-                            confirm = false;
-                            validInt = true;
-                            break;
-                        default:
-                            System.out.println("Invalid input, please enter 1 or 2.");
-                            validInt = false;
-                            break;
+                        switch(answer){
+                            case 1:
+                                confirm = true;
+                                validInt = true;
+                                break;
+                            case 2:
+                                confirm = false;
+                                validInt = true;
+                                break;
+                            default:
+                                System.out.println("Invalid input, please enter 1 or 2.");
+                                validInt = false;
+                                break;
+                        }
+                    }else{
+                        System.out.println("Invalid input, please enter 1 or 2.");
+                        validInt = false;
+                        scanner.nextLine(); // Consume invalid input
                     }
-                }else{
+                }catch(InputMismatchException ex){
                     System.out.println("Invalid input, please enter 1 or 2.");
                     validInt = false;
                     scanner.nextLine(); // Consume invalid input
                 }
-            }catch(InputMismatchException ex){
-                System.out.println("Invalid input, please enter 1 or 2.");
-                validInt = false;
-                scanner.nextLine(); // Consume invalid input
             }
         }
-    }
-    
-    // Display questionaires for personal information
-    confirm = false;
-    while(!confirm){
-        System.out.println("\n== Required Information ==");
-        System.out.print("Nationality: ");
-        nationality = scanner.nextLine();
 
-        validInt = false;
-        while(!validInt){
+        // Display questionaires for personal information
+        confirm = false;
+        while(!confirm){
+            System.out.println("\n== Required Information ==");
+            nationality = handle.getNationality();
+            gender = handle.getGender();
+            dob = handle.getDob();
+
             System.out.println("\n== Personal Details ==");
-            System.out.println("Gender: ");
-            System.out.println("1. Female");
-            System.out.println("2. Male");
-            System.out.print("Pick: ");
-            try{
-                if (scanner.hasNextInt()){
-                    gender = scanner.nextInt();
-                    scanner.nextLine(); // Consume the newline character left by nextInt()
+            System.out.println("Nationality: " + nationality);
+            System.out.print("Gender: ");
+            if (gender == 1){
+                System.out.print("Female");
+            } else {
+                System.out.print("Male");
+            }
+            System.out.println("\nDate of Birth (dd/mm/yyyy): " + dob);
 
-                    switch (gender){
-                        case 1:
-                            validInt = true;
-                            break;
-                        case 2:
-                            validInt = true;
-                            break;
-                        default:
-                            System.out.println("Invalid input, please enter 1 or 2.");
-                            validInt = false;
-                            break;
+            validInt = false; // reset value
+            while(!validInt){
+                System.out.println("\nIs the above infomation correct or do you want to make changes?");
+                System.out.println("1. Confirm");
+                System.out.println("2. Edit");
+                System.out.print("Pick: ");
+                try{
+                    if (scanner.hasNextInt()){
+                        answer = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline character left by nextInt()
+
+                        switch(answer){
+                            case 1:
+                                confirm = true;
+                                validInt = true;
+                                break;
+                            case 2:
+                                confirm = false;
+                                validInt = true;
+                                break;
+                            default:
+                                System.out.println("Invalid input, please enter 1 or 2.");
+                                validInt = false;
+                                break;
+                        }
+                    }else{
+                        System.out.println("Invalid input, please enter 1 or 2.");
+                        validInt = false;
+                        scanner.nextLine(); // Consume invalid input
                     }
-                }else{
+                }catch(InputMismatchException ex){
                     System.out.println("Invalid input, please enter 1 or 2.");
                     validInt = false;
                     scanner.nextLine(); // Consume invalid input
                 }
-            }catch(InputMismatchException ex){
-                System.out.println("Invalid input, please enter 1 or 2.");
-                validInt = false;
-                scanner.nextLine(); // Consume invalid input
-            }
-        }
-        
-        // Validate date format
-        while(!valid){
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            dateFormat.setLenient(false);
-            try{
-                System.out.println("Date of Birth (dd/mm/yyyy): ");
-                dob = scanner.nextLine();
-                dateFormat.parse(dob);
-                valid = true;
-            }
-            catch(ParseException e){
-                System.out.println("Invalid date format! Follow the format (dd/mm/yyyy).");
-            }
-        }
-        
-        System.out.println("\n== Personal Details ==");
-        System.out.println("Nationality: " + nationality);
-        System.out.print("Gender: ");
-        if (gender == 1){
-            System.out.print("Female");
-        } else {
-            System.out.print("Male");
-        }
-        System.out.println("\nDate of Birth (dd/mm/yyyy): " + dob);
-
-        validInt = false; // reset value
-        while(!validInt){
-            System.out.println("\nIs the above infomation correct or do you want to make changes?");
-            System.out.println("1. Confirm");
-            System.out.println("2. Edit");
-            System.out.print("Pick: ");
-            try{
-                if (scanner.hasNextInt()){
-                    answer = scanner.nextInt();
-                    scanner.nextLine(); // Consume the newline character left by nextInt()
-
-                    switch(answer){
-                        case 1:
-                            confirm = true;
-                            validInt = true;
-                            break;
-                        case 2:
-                            confirm = false;
-                            validInt = true;
-                            break;
-                        default:
-                            System.out.println("Invalid input, please enter 1 or 2.");
-                            validInt = false;
-                            break;
-                    }
-                }else{
-                    System.out.println("Invalid input, please enter 1 or 2.");
-                    validInt = false;
-                    scanner.nextLine(); // Consume invalid input
-                }
-            }catch(InputMismatchException ex){
-                System.out.println("Invalid input, please enter 1 or 2.");
-                validInt = false;
-                scanner.nextLine(); // Consume invalid input
             }
         }
     }
-}
         //passport part
     public static SpecialNeeds SpecialgatherPassportInfo(Scanner scanner){
         boolean sValidInt, sConfirm; // Confirm info or edit info
