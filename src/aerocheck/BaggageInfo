@@ -1,0 +1,40 @@
+package pcheckin;
+
+/**
+ *
+ * @author ASUS
+ */
+public class BaggageInfo {
+     private String baggageID;
+    private double weight;
+    private String status;
+    private String passengerID;
+
+    public BaggageInfo (String baggageID, double weight, String passengerID) {
+        this.baggageID = baggageID;
+        this.weight = weight;
+        this.passengerID = passengerID;
+        this.status = "Not Checked In ";
+    }
+
+    public void checkIn() {
+        status = "Checked In";
+        System.out.println("Baggage " + baggageID + " checked in.");
+    }
+
+    public void updateStatus(String newStatus) {
+        status = newStatus;
+        System.out.println("Baggage " + baggageID + " status updated to " + newStatus);
+    }
+
+    @Override
+    public String toString() {
+        return "Baggage{" +
+                "baggageID='" + baggageID + '\'' +
+                ", weight=" + weight +
+                ", status='" + status + '\'' +
+                ", passengerID='" + passengerID + '\'' +
+                '}';
+    }
+}
+
