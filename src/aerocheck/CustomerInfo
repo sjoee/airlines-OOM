@@ -1,0 +1,49 @@
+package pcheckin;
+
+
+import java.time.LocalDate;
+
+class CustomerInfo extends Customer {
+    private BoardingPass boardingPass;
+    private BaggageInfo baggage;
+
+    public CustomerInfo(String customerID, String name, String contactInfo, String email, String phoneNumber, String passportNumber, LocalDate passportExpiryDate, String country) {
+        super(customerID, name, contactInfo, email, phoneNumber, passportNumber, passportExpiryDate, country);
+    }
+
+    public void selfCheckIn(String seatNumber, BaggageInfo baggage) {
+        if (PassportValidator.validatePassport(this)) {
+            System.out.println(getName() + " checked in using self-service.");
+            this.boardingPass = new BoardingPass(getCustomerID(), seatNumber);
+            this.baggage = baggage;
+            this.baggage.checkIn();
+            receiveBoardingPass();
+        } else {
+            System.out.println("Invalid passport for " + getName());
+        }
+    }
+
+    public void groundHandlingCheckIn(String seatNumber, BaggageInfo baggage) {
+        if (PassportValidator.validatePassport(this)) {
+            System.out.println(getName() + " checked in by ground handling.");
+            this.boardingPass = new BoardingPass(getCustomerID(), seatNumber);
+            this.baggage = baggage;
+            this.baggage.checkIn();
+            receiveBoardingPass();
+        } else {
+            System.out.println("Invalid passport for " + getName());
+        }
+    }
+
+    private void receiveBoardingPass() {
+        System.out.println(getName() + " received electronic boarding pass: " + boardingPass);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " CustomerInfo{" +
+                "boardingPass=" + boardingPass +
+                ", baggage=" + baggage +
+                '}';
+    }
+}
