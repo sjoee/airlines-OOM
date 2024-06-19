@@ -301,7 +301,10 @@ public class AeroCheck {
     
     // GENERATR BOARDING PASS
     private static void boardingPass(String role){
+        Scanner scanner = new Scanner(System.in);
         UserInputHandler handle = new UserInputHandler();
+        String seatNo;
+        int flightNo;
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String today = date.format(formatter);
@@ -310,8 +313,6 @@ public class AeroCheck {
         DateTimeFormatter timeF = DateTimeFormatter.ofPattern("hh:mm a");
         String formattedTime = time.format(timeF);
         
-        String seatNo;
-        int flightNo;
         if (role == "Group Lead" || role == "Group Member"){
             System.out.println("== Enter Seat Information ==");
             seatNo = handle.getSeatNo();
@@ -365,6 +366,54 @@ public class AeroCheck {
             System.out.println("\nPhone Number: " + contact);
             System.out.println("Email: " + email);
             System.out.println("====================");
+        }
+        
+        boolean validInt = false;
+        while(!validInt){
+            System.out.println("\nDo you want to print boarding pass or access via mobile device?");
+            System.out.println("1. Print");
+            System.out.println("2. Mobile Device");
+            System.out.print("Pick: ");
+            try{
+                if (scanner.hasNextInt()){
+                    int answer = scanner.nextInt();
+                    scanner.nextLine(); // Consume the newline character left by nextInt()
+
+                    switch(answer){
+                        case 1:
+                            System.out.print("\nPrinting");
+                            for (int i = 0;i < 20;i++) {
+                                 try {
+                                    System.out.print(".");
+                                     TimeUnit.SECONDS.sleep(1);
+                                 }catch (InterruptedException e) {
+                                   e.printStackTrace();
+                                 } if (i == 3) {
+                                     System.out.println("\nPrinting completed!");
+                                     break;
+                                 }
+                            }
+                            validInt = true;
+                            break;
+                        case 2:
+                            System.out.println("\nBoarding pass sent to email!");
+                            validInt = true;
+                            break;
+                        default:
+                            System.out.println("Invalid input, please enter 1 or 2.");
+                            validInt = false;
+                            break;
+                    }
+                }else{
+                    System.out.println("Invalid input, please enter 1 or 2.");
+                    validInt = false;
+                    scanner.nextLine(); // Consume invalid input
+                }
+            }catch(InputMismatchException ex){
+                System.out.println("Invalid input, please enter 1 or 2.");
+                validInt = false;
+                scanner.nextLine(); // Consume invalid input
+            }
         }
     }
     
