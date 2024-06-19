@@ -1,63 +1,54 @@
 package aerocheck;
 
-*// initialization*//
 public class Passenger {
-    private int BookingID;
-    private Gender gender;
-    private String firstName, lastName, email, contact, nationality, dateOfBirth, passportNo,country,passportExpiry,issuingCountry;
+    private int BookingID, gender;
+    private String FName, LName, email, contact, nationality, dob, passportNo,country,passportExpiry,issuingCountry;
     
-    public enum Gender{
-    MALE , FEMALE
-    }
-
-    
-    public Passenger(int bookingID, String firstName, String lastName, int gender, String email, String contact, String nationality, String dateOfBirth, String passportNumber, String country, String passportExpiry, String issuingCountry){
-        this.bookingID = bookingID;
+    public Passenger(int BookingID, String FName, String LName, int gender, String email, String contact, String nationality, String dob, String passportNo, String country, String passportExpiry, String issuingCountry){
+        this.BookingID = BookingID;
         this.gender = gender;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.FName = FName;
+        this.LName = LName;
         this.email = email;
         this.contact = contact;
         this.nationality = nationality;
-        this.dateOfBirth = dateOfBirth;
-        this.passportNo = passportNumber;
+        this.dob = dob;
+        this.passportNo = passportNo;
         this.country = country;
         this.passportExpiry = passportExpiry;
         this.issuingCountry = issuingCountry;
     }
     
-*// getter and setter method*//  
-  
     public int getBookingID() {
-        return bookingID;
+        return BookingID;
     }
 
-    public void setBookingID(int bookingID) {
-        this.bookingID = bookingID;
+    public void setBookingID(int BookingID) {
+        this.BookingID = BookingID;
     }
 
-    public Gender getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFName() {
+        return FName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFName(String FName) {
+        this.FName = FName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLName() {
+        return LName;
     }
 
-    public void setLName(String lastName) {
-        this.lastName = lastName;
+    public void setLName(String LName) {
+        this.LName = LName;
     }
 
     public String getEmail() {
@@ -84,20 +75,20 @@ public class Passenger {
         this.nationality = nationality;
     }
 
-    public String getDateofBirth() {
-        return dateOfBirth;
+    public String getDob() {
+        return dob;
     }
 
-    public void setDateOfBirth(String dateofBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
-    public String getPassportNumber() {
-        return passportNumber;
+    public String getPassportNo() {
+        return passportNo;
     }
 
-    public void setPassportNumber(String passportNumber) {
-        this.passportNumber = passportNumber;
+    public void setPassportNo(String passportNo) {
+        this.passportNo = passportNo;
     }
 
     public String getCountry() {
@@ -123,23 +114,30 @@ public class Passenger {
     public void setIssuingCountry(String issuingCountry) {
         this.issuingCountry = issuingCountry;
     }
-  
-  
+    
     @Override
     public String toString(){
-        return = "\n== Passenger Check-In Information ==" 
-                + "\nBooking ID: " + BookingID +
-                 "\nFirst Name: " + firstName +
-                 "\nLast Name: " + lastName +
-                 "\nGender: " + (gender == Gender.FEMALE? "Female" : "Male") +
-                 "\nEmail: " + email +
-                 "\nContact: " + contact +
-                 "\nNationality: " + nationality +
-                 "\nDate of Birth: " + dateOfBirth +
-                 "\n\n== Passport Information Display Here ==" +
-                 "\nPassport Number: " + passportNumber +
-                 "\nCountry: " + country +
-                 "\nPassport Expiry: " + passportExpiry +
-                 "\nPassport issuing country: " + issuingCountry;
+        String gender;
+        if (getGender() == 1)
+            gender = "Female";
+        else
+            gender = "Male";
+        
+        String str = "\n== Passenger Check-In Information ==" 
+                + "\nBooking ID: " + getBookingID()
+                + "\nFirst Name: " + getFName() 
+                + "\nLast Name: " + getLName()
+                + "\nGender: " + gender
+                + "\nEmail: " + getEmail()
+                + "\nContact: " + getContact()
+                + "\nNationality: " + getNationality()
+                + "\nDate of Birth: " + getDob() + "\n"
+                + "\n== Passport Information =="
+                + "\nPassport Number: " + getPassportNo()
+                + "\nCountry: " + getCountry()
+                + "\nPassport Expiry: " + getPassportExpiry()
+                + "\nPassport issuing country: " + getIssuingCountry();
+        
+        return str;
     }
 }
