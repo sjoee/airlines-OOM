@@ -450,7 +450,6 @@ public class AeroCheck {
         }
             return new Group(bookingID, grpLeadBookingID, FName, LName, gender, grpLeadEmail, grpLeadContact, nationality, dob, passportNo, country, passportExpiry, issuingCountry);
     }
-        
 
     //GROUP MEMBER INFO [UNDER CASE 2]
     private static void gatherGrpMemberInfo(Scanner scanner, ArrayList<Group> members){
@@ -904,13 +903,14 @@ public class AeroCheck {
                        case 2:
                            confirm = true;
                            System.out.println("\nScreening progess:");
+                           System.out.print("Loading");
                            for (int i = 0;i < 20;i++) {
                                 try {
-                                   System.out.print("=");
+                                   System.out.print(".");
                                     TimeUnit.SECONDS.sleep(1);
                                 }catch (InterruptedException e) {
                                   e.printStackTrace();
-                                } if (i == 10) {
+                                } if (i == 3) {
                                     System.out.println("\n");
                                     System.out.println("Screening process completed!");
                                     System.out.println("Baggage " + baggageID + " does not contain restricted items.");
