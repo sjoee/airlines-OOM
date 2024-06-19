@@ -118,4 +118,30 @@ public class Passenger {
     public void setIssuingCountry(String issuingCountry) {
         this.issuingCountry = issuingCountry;
     }
+    
+    @Override
+    public String toString(){
+        String gender;
+        if (getGender() == 1)
+            gender = "Female";
+        else
+            gender = "Male";
+        
+        String str = "\n== Passenger Check-In Information ==" 
+                + "\nBooking ID: " + getBookingID()
+                + "\nFirst Name: " + getFName() 
+                + "\nLast Name: " + getLName()
+                + "\nGender: " + gender
+                + "\nEmail: " + getEmail()
+                + "\nContact: " + getContact()
+                + "\nNationality: " + getNationality()
+                + "\nDate of Birth: " + getDob() + "\n"
+                + "\n== Passport Information =="
+                + "\nPassport Number: " + getPassportNo()
+                + "\nCountry: " + getCountry()
+                + "\nPassport Expiry: " + getPassportExpiry()
+                + "\nPassport issuing country: " + getIssuingCountry();
+        
+        return str;
+    }
 }

@@ -159,4 +159,42 @@ public class UserInputHandler {
         }
         return dob;
     }
+    
+    public String getSeatNo(){
+        String seatNo;
+        while (true) {
+            System.out.print("Seat Number: ");
+            seatNo = scanner.nextLine();
+            if (!seatNo.trim().isEmpty()) {
+                break;
+            } else {
+                System.out.println("Seat Number cannot be empty. Please try again.");
+            }
+        }
+        return seatNo;
+    }
+    
+    public int getFlightNo(){
+        boolean validInt = false; // reset value
+        int flightNo = 0;
+        while(!validInt){ // validate integer value
+            System.out.print("Flight Number: ");
+            try{
+                if (scanner.hasNextInt()){
+                    flightNo = scanner.nextInt();
+                    validInt = true;
+                    scanner.nextLine(); // Consume the newline character left by nextInt()
+                }else{
+                    System.out.println("Invalid input, please enter numericals.");
+                    validInt = false;
+                    scanner.nextLine(); // Consume invalid input
+                }
+            }catch(InputMismatchException ex){
+                System.out.println("Invalid input, please enter numericals.");
+                validInt = false;
+                scanner.nextLine(); // Consume invalid input
+            }
+        }
+        return flightNo;
+    }
 }

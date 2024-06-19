@@ -1,7 +1,8 @@
 package aerocheck;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -30,11 +31,11 @@ public class AeroCheck {
                     switch (checkInMethod) {
                         case 1:
                             valid = true;
-                            handleCheckIn(scanner);
+                            handleCheckIn(scanner, "Counter");
                             break;
                         case 2:
                             valid = true;
-                            handleCheckIn(scanner);
+                            handleCheckIn(scanner, "Kiosk");
                             break;
                         case 3:
                             System.exit(0);
@@ -81,7 +82,7 @@ public class AeroCheck {
         }
     }
     
-    private static void handleCheckIn(Scanner scanner) {
+    private static void handleCheckIn(Scanner scanner, String method) {
         boolean valid = false;
         ArrayList<Group> members = new ArrayList<>();
         
@@ -106,10 +107,21 @@ public class AeroCheck {
                         gatherGrpLeadInfo(scanner);
                         Group group = gatherPassportInfo(scanner);
                         members.add(group);
+                        boardingPass("Group Lead");
+                        
                         gatherGrpMemberInfo(scanner, members);
                         // Display all group info
                         for(Group member:members){
                             System.out.println(member);
+                        }
+                        if (method == "Counter"){
+                            System.out.println("\n=============================================");
+                            System.out.println("Group has successfully checked in via Counter");
+                            System.out.println("=============================================");
+                        } else if (method == "Kiosk"){
+                            System.out.println("\n=============================================");
+                            System.out.println("Group has successfully checked in via Kiosk");
+                            System.out.println("=============================================");
                         }
                         break;
                     case 3:
@@ -140,7 +152,7 @@ public class AeroCheck {
     //GROUP LEADER CHECK-IN HERE [CASE 2]
     private static void gatherGrpLeadInfo(Scanner scanner){
         UserInputHandler handle = new UserInputHandler();
-        boolean validInt, confirm = false, valid = false; // Confirm info or edit info
+        boolean validInt, confirm = false; // Confirm info or edit info
         int answer;
         // Display questionaires for grp representative
         while(!confirm){
@@ -272,6 +284,75 @@ public class AeroCheck {
             }
         }
     } //GROUP LEADER CHECK-IN ENDS
+    
+    // GENERATR BOARDING PASS
+    private static void boardingPass(String role){
+        UserInputHandler handle = new UserInputHandler();
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String today = date.format(formatter);
+        
+        LocalTime time = LocalTime.now();
+        DateTimeFormatter timeF = DateTimeFormatter.ofPattern("hh:mm a");
+        String formattedTime = time.format(timeF);
+        
+        String seatNo;
+        int flightNo;
+        if (role == "Group Lead" || role == "Group Member"){
+            System.out.println("== Enter Seat Information ==");
+            seatNo = handle.getSeatNo();
+            flightNo = handle.getFlightNo();
+
+            System.out.println("\n====================");
+            System.out.println("== BOARDING PASS ==");
+            System.out.println("====================");
+            System.out.println("Booking ID: " + bookingID);
+            System.out.println("\nFLIGHT INFORMATION");
+            System.out.println("Flight Number: " + flightNo);
+            System.out.println("---------------------");
+            System.out.println("Seat Number: " + seatNo);
+            System.out.println("Date: " + today);
+            System.out.println("Time: " + formattedTime);
+            System.out.println("---------------------");
+            System.out.println("PASSENGER INFORMATION");
+            System.out.println("Passenger Name: " + FName + " " + LName);
+            System.out.print("Gender: ");
+            if (gender == 1)
+                System.out.print("F");
+            else
+                System.out.print("M");
+            System.out.println("\nPhone Number: " + grpLeadContact);
+            System.out.println("Email: " + grpLeadEmail);
+            System.out.println("====================");
+        }
+        else if (role == "Passenger"){
+            System.out.println("== Enter Seat Information ==");
+            seatNo = handle.getSeatNo();
+            flightNo = handle.getFlightNo();
+
+            System.out.println("\n====================");
+            System.out.println("== BOARDING PASS ==");
+            System.out.println("====================");
+            System.out.println("Booking ID: " + bookingID);
+            System.out.println("\nFLIGHT INFORMATION");
+            System.out.println("Flight Number: " + flightNo);
+            System.out.println("---------------------");
+            System.out.println("Seat Number: " + seatNo);
+            System.out.println("Date: " + today);
+            System.out.println("Time: " + formattedTime);
+            System.out.println("---------------------");
+            System.out.println("PASSENGER INFORMATION");
+            System.out.println("Passenger Name: " + FName + " " + LName);
+            System.out.println("Gender: ");
+            if (gender == 1)
+                System.out.print("F");
+            else
+                System.out.print("M");
+            System.out.println("\nPhone Number: " + contact);
+            System.out.println("Email: " + email);
+            System.out.println("====================");
+        }
+    }
     
     //GROUP PASSPORT [UNDER CASE 2]
     private static Group gatherPassportInfo(Scanner scanner){
@@ -516,6 +597,9 @@ public class AeroCheck {
                         }
                         // Gather passport info and store all data in arraylist
                         members.add(gatherPassportInfo(scanner));
+                        
+                        // Generate boarding pass
+                        boardingPass("Group Member");
                     }
                 }else{
                     System.out.println("Invalid input, please enter an integer.");
@@ -533,7 +617,7 @@ public class AeroCheck {
     //SPECIAL NEEDS CHECK-IN
     private static void gatherSNeedsInfo(Scanner scanner){
         UserInputHandler handle = new UserInputHandler();
-        boolean validInt, confirm = false, valid = false; // Confirm info or edit info
+        boolean validInt, confirm = false; // Confirm info or edit info
         int answer;//, bookingId = 0;
         // Display questionaires for grp representative
         while(!confirm){
@@ -744,6 +828,9 @@ public class AeroCheck {
 
             
             }
+            
+            // Generate boarding pass
+            boardingPass("Passenger");
             
             System.out.print("Enter Assistance Type: ");
             assistanceType = scanner.nextLine();
