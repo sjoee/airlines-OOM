@@ -132,9 +132,19 @@ public class AeroCheck {
 
                         SpecialNeeds specialNeeds = SpecialgatherPassportInfo(scanner);
                         System.out.println(specialNeeds);
+                        
+                        if (method == "Counter"){
+                            System.out.println("\n=============================================");
+                            System.out.println("Passenger has successfully checked in via Counter");
+                            System.out.println("=============================================");
+                        } else if (method == "Kiosk"){
+                            System.out.println("\n=============================================");
+                            System.out.println("Passenger has successfully checked in via Kiosk");
+                            System.out.println("=============================================");
+                        }
                         break;
                     case 4:
-                        baggageHandling(scanner);
+                        baggageHandling(scanner,method);
                     case 5:
                         System.exit(0);
                     default:
@@ -852,108 +862,97 @@ public class AeroCheck {
     /*private static void baggageMethod(Scanner scanner) {
         boolean validInput = false;   
     }*/
-    private static void baggageHandling(Scanner scanner){
-        String baggageID = "";
+    private static void baggageHandling(Scanner scanner, String method){
+        UserInputHandler handle = new UserInputHandler();
+        String baggageID = null;
         int number = (int)(Math.random() * 3);
         
-        
-        System.out.println("\n==Please Generate your Baggage Tag==");
-                    
-        System.out.print("Enter Booking ID: ");
-        String bookingID = scanner.nextLine();
+        System.out.println("\n== Generate your Baggage Tag ==");
+        bookingID = handle.getBookingID();
+        String seatNo = handle.getSeatNo();
+        int flightNo = handle.getFlightNo();
                         
-        System.out.print("Enter ID: ");
-        String id = scanner.nextLine();
-                        
-        System.out.print("Enter Flight Number: ");
-        String flightNo = scanner.nextLine();
-                        
-        baggageID = "TAG-" + bookingID + "-" + id + "-" + flightNo; 
+        baggageID = "TAG-" + bookingID + "-" + seatNo + "-" + flightNo; 
         System.out.println("\nYour Baggage Tag: " + baggageID);
         System.out.println("");
-                        
         
         while(true){
             boolean confirm = false, valid = false;
 
-        while(!confirm){
-        System.out.println("==Baggage Handling==");
-        System.out.println("1. Track Baggage");
-        System.out.println("2. Screening Status");
-        System.out.println("3. Exit");
-        System.out.println("Pick: ");
-        
-         if(scanner.hasNextInt()) {
-            int baggageHandling = scanner.nextInt();
-            scanner.nextLine();
+            while(!confirm){
+                System.out.println("==Baggage Handling==");
+                System.out.println("1. Track Baggage");
+                System.out.println("2. Screening Status");
+                System.out.println("3. Exit");
+                System.out.println("Pick: ");
 
-            switch(baggageHandling){
-                case 1:
-                    confirm = true;
-                    if (number == 0)
-                    System.out.println("Your Baggage " + baggageID + " is at the pickup point.");
+                if(scanner.hasNextInt()) {
+                   int baggageHandling = scanner.nextInt();
+                   scanner.nextLine();
 
-                    if (number == 1)
-                    System.out.println("Your Baggage " + baggageID + " is checked in the plane.");
+                   switch(baggageHandling){
+                       case 1:
+                            confirm = true;
+                            if (number == 0){
+                                System.out.println("Your Baggage " + baggageID + " is at the pickup point.");
+                            }else if (number == 1){
+                                System.out.println("Your Baggage " + baggageID + " is checked in the plane.");
+                            }else if (number == 2){
+                                System.out.println("Your Baggage " + baggageID + " is at the drop-off point.");}
+                            break;
 
-                    if (number == 2)
-                    System.out.println("Your Baggage " + baggageID + " is at the drop-off point.");
-                    
-                    break;
-                    
-                case 2:
-                    confirm = true;
-                    System.out.println("\nScreening progess:");
-                    for (int i = 0;i < 20;i++) {
-                         try {
-                            System.out.print("=");
-                             TimeUnit.SECONDS.sleep(1);
-                         }catch (InterruptedException e) {
-                           e.printStackTrace();
-                         } if (i == 10) {
-                              System.out.println("\n");
-                              System.out.println("Screening process completed!");
-                              System.out.println("Baggage " + baggageID + " does not contain restricted items.");
-                              break;
-                         }
-                    }
-                    
-                    break;
-                    
-                case 3:
-                    System.exit(0);
-                    break;
-                    
-                default:
+                       case 2:
+                           confirm = true;
+                           System.out.println("\nScreening progess:");
+                           for (int i = 0;i < 20;i++) {
+                                try {
+                                   System.out.print("=");
+                                    TimeUnit.SECONDS.sleep(1);
+                                }catch (InterruptedException e) {
+                                  e.printStackTrace();
+                                } if (i == 10) {
+                                    System.out.println("\n");
+                                    System.out.println("Screening process completed!");
+                                    System.out.println("Baggage " + baggageID + " does not contain restricted items.");
+                                    break;
+                                }
+                           }
+                           break;
+
+                       case 3:
+                           System.exit(0);
+                           break;
+
+                       default:
+                           System.out.println("Invalid choice. Pick 1, 2 or 3.");
+                           confirm = false;
+                           break;}
+                }else {
                     System.out.println("Invalid choice. Pick 1, 2 or 3.");
                     confirm = false;
-                    break;}
-         }else {
-            System.out.println("Invalid choice. Pick 1, 2 or 3.");
-            confirm = false;
-            scanner.nextLine();
-        }
-       while(true){
-                System.out.println("\nDo you want to continue baggage handling?\n1. Yes\n2. No");
-                System.out.print("Pick: ");
-                    if (scanner.hasNextInt()){
-                        int answer = scanner.nextInt();
-                        scanner.nextLine();
-                        if (answer == 1) {
-                        break;
-                    } else if (answer == 2) {
-                            valid = true;
-                            System.out.println("");
-                            handleCheckIn(scanner);
+                    scanner.nextLine();
+                }
+                while(true){
+                    System.out.println("\nDo you want to continue baggage handling?\n1. Yes\n2. No");
+                    System.out.print("Pick: ");
+                        if (scanner.hasNextInt()){
+                            int answer = scanner.nextInt();
+                            scanner.nextLine();
+                            if (answer == 1) {
+                            break;
+                        } else if (answer == 2) {
+                                valid = true;
+                                System.out.println("");
+                                handleCheckIn(scanner,method);
+                        } else {
+                            System.out.println("Invalid number, input 1 or 2.");
+                        }
                     } else {
-                        System.out.println("Invalid number, input 1 or 2.");
+                        System.out.println("Invalid number, input 1 or 2."); 
+                        scanner.nextLine(); // Consume invalid input
                     }
-                } else {
-                    System.out.println("Invalid number, input 1 or 2."); 
-                    scanner.nextLine(); // Consume invalid input
                 }
             }
         }
-}
     }
 }
