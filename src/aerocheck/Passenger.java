@@ -3,7 +3,7 @@ package aerocheck;
 *// initialization*//
 public class Passenger {
     private int BookingID;
-    private Gneder gender;
+    private Gender gender;
     private String firstName, lastName, email, contact, nationality, dateOfBirth, passportNo,country,passportExpiry,issuingCountry;
     
     public enum Gender{
